@@ -1,33 +1,33 @@
 import {Card, Group,Text,Badge,Checkbox} from "@mantine/core";
-import type {Task} from '../model/types';
+import type {Expense} from '../model/types';
 
 
-export const TaskCard = ({task}:{task:Task}) =>
+export const ExpenseCard = ({expense}:{expense:Expense}) =>
 {
     return(
         <Card shadow = "sm" padding = "md" radius = "md" withBorder mb = "sm">
             <Group justify = "space-between">
                 {/*лч*/}
                 <Group>
-                    <Checkbox checked = {task.isDone} readOnly onChange={()=>{}} />
+                    <Checkbox checked = {expense.isApproved} readOnly onChange={()=>{}} />
                         <Text
                             fw = {500}
-                            td = {task.isDone ? 'line-throught':'none'}
-                            c = {task.isDone ? 'dimmed' : 'dark'}
+                            td = {expense.isApproved ? 'line-through':'none'}
+                            c = {expense.isApproved ? 'dimmed' : 'dark'}
                         >
-                            {task.title}
+                            {expense.title}
                         </Text>
                 </Group>
                 {/*пч*/}
-                <Badge color = {task.isDone ? 'green' : 'blue'}>
-                    {task.isDone ? 'Готово':'В работе'}
+                <Badge color = {expense.isApproved ? 'green' : 'blue'}>
+                    {expense.isApproved ? 'Утвержден':'На проверке'}
                 </Badge>
 
             </Group>
-            {task.description &&
+            {expense.amount >0  &&
                 (
                     <Text size = "sm" c = "dimmed" mt = "sm">
-                        {task.description}
+                        Сумма: {expense.amount} ₽
                     </Text>
                 )
             }

@@ -10,20 +10,20 @@ export  const Layout = () =>
             {/*шапка*/}
             <AppShell.Header>
                 <Group h = "100%" px = "md" justify={"space-between"}>
-                    <Title order = {3}>ToDo App</Title>
+                    <Title order = {3}>comApp</Title>
                     {/* Меню */}
                     <Group>
                         <NavLink
                             component = {Link}
                             to = "/"
-                            label = "Задачи"
+                            label = "Расходы"
                             active = {location.pathname === '/'}
                         />
                         <NavLink
                             component = {Link}
-                            to = "/projects"
-                            label = "Проекты"
-                            active = {location.pathname === '/projects'}
+                            to = "/trips"
+                            label = "Командировки"
+                            active = {location.pathname === '/trips'}
                         />
                         </Group>
                 </Group>
