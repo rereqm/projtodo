@@ -1,60 +1,54 @@
-import type {Project} from "../../entities/project/model/types.ts";
-import type {Task} from "../../entities/task/model/types.ts";
+import type { Trip } from "../../entities/trip/model/types";
+import type { Expense } from "../../entities/expense/model/types";
 
-export const mockProjects: Project[] =
+export const mockTrips: Trip[] =
     [
         {
-            id: "p1",
-            title: "проект1",
-            description: "сделать проект 1!!!!!",
-            color: "blue"
+            id: "trip1",
+            title: "Москва (IT-конференция)",
+            description: "Поездка на ежегодную конференцию разработчиков",
+            budget: 50000,
+            color: "blue",
         },
         {
-            id: "p2",
-            title: "проект2",
-            description: "сделать проект 2!",
-            color: "green"
+            id: "trip2",
+            title: "Санкт-Петербург (Встреча с клиентом)",
+            description: "Презентация нового продукта",
+            budget: 25000,
+            color: "green",
         },
         {
-            id: "p3",
-            title: "проект3",
-            description: "сделать проект 3!!!!!",
-            color: "grape"
+            id: "trip3",
+            title: "Казань (Форум)",
+            description: "Обмен опытом",
+            budget: 30000,
+            color: "grape",
         },
     ];
-export const mockTasks: Task[] =
-    [
-        {
-            id: "t1",
-            title: "сделать задачу1",
-            description: "по сумашедшему сделать задачачу 1 проекта 1",
-            isDone: false,
-            projectId: "1",
-            createdAt: "2026-11-01"
-        },
-        {
-            id: "t2",
-            title: "сделать задачу2",
-            description: "по сумашедшему сделать задачачу 2 проекта 1",
-            isDone: true,
-            projectId: "1",
-            createdAt: "2026-11-01"
-        },
-        {
-            id: "t3",
-            title: "сделать задачу1",
-            description: "по сумашедшему сделать задачачу 1 проекта 2",
-            isDone: false,
-            projectId: "2",
-            createdAt: "2026-11-10"
-        },
-        {
-            id: "t4",
-            title: "сделать задачу2",
-            description: "по сумашедшему сделать задачачу 1 проекта 3",
-            isDone: true,
-            projectId: "3",
-            createdAt: "2026-11-11"
-        },
 
-    ];
+export const mockExpenses: Expense[] = [
+    {
+        id: "exp1",
+        title: "Авиабилеты туда-обратно",
+        amount: 15000,
+        isApproved: true,
+        tripId: "trip1",
+        createdAt: "2026-11-10",
+    },
+    {
+        id: "exp2",
+        title: "Бронирование отеля (3 ночи)",
+        amount: 12000,
+        isApproved: false,
+        tripId: "trip1",
+        createdAt: "2026-11-11",
+    },
+    {
+        id: "exp3",
+        title: "Такси до аэропорта",
+        amount: 1500,
+        isApproved: false,
+        tripId: "trip2",
+        createdAt: "2026-11-11",
+    },
+];

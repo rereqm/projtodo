@@ -1,7 +1,7 @@
 import {createBrowserRouter} from "react-router";
 import {Layout} from "../shared/ui/Layout.tsx";
-import {TasksPage} from "../pages/tasks/TasksPage.tsx";
-import {ProjectsPage} from "../pages/projects/ProjectsPage.tsx";
+import {ExpensePage} from "../pages/expense/ExpensePage.tsx";
+import {TripPage} from "../pages/trip/TripPage.tsx";
 export const router = createBrowserRouter
 ([
     {
@@ -9,8 +9,8 @@ export const router = createBrowserRouter
         element: <Layout/>,
         children:
         [
-            {index:true,element:<TasksPage/>},
-            {path:'projects',element:<ProjectsPage/>},
+            {index:true,element:<ExpensePage/>},
+            {path:'trips',element:<TripPage/>},
         ]
     }
 ])
