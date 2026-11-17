@@ -11,12 +11,13 @@ class Trip(Base):
     description = Column(String, nullable=False)
     budget = Column(Numeric(10,2),nullable = False)
 
-    expeses = relationship("Expence",back_populates="trip",cascade="all , delete-orphan")
+    expeses = relationship("Expense",back_populates="trip",cascade="all , delete-orphan")
 
-class Expence(Base):
-    __tablename__ = "expences"
+class Expense(Base):
+    __tablename__ = "expenses"
     id = Column(Integer, primary_key=True,index=True)
     title = Column(String,index = True,nullable = False)
+    amount = Column(Numeric(10,2),nullable = False)
     is_approved = Column(Boolean,default = False,nullable = False)
     created_at = Column(DateTime(timezone=True),server_default = func.now(),nullable = False)
 
