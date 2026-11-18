@@ -42,6 +42,17 @@ def delete_trip(trip_id: int, db: Session = Depends(get_db)):
     db.commit()
     return None
 
+@router.patch("/trips/{trip_id}/",response_model=schemas.TripResponse)
+def update_trip(trip_id: int,trip_update:schemas.TripUpdate,db: Session = Depends(get_db)):
+    db_trip = db.query(models.Trip).filter(models.Trip.id == trip_id).first()
+    if db_trip is None:
+        raise HTTPException(status_code = 404, detail = "Trip not found")
+    update_data = trip_update.model_dump(exclude_unset=True)
+    for key,value in update_data.items():
+        setattr(db_trip,key,value)
+    db.commit()
+    db.refresh(db_trip)
+    return db_trip
 #expense
 
 @router.post("/expenses/",response_model=schemas.ExpenseResponse,status_code = status.HTTP_201_CREATED)
@@ -59,3 +70,15 @@ def create_expense(expense:schemas.ExpenseCreate, db: Session = Depends(get_db))
 def get_expenses_for_trip(trip_id: int, db: Session = Depends(get_db)):
     expenses = db.query(models.Expense).filter(models.Expense.trip_id == trip_id).all()
     return expenses
+
+@router.patch("/expenses/{expense_id}}",response_model=schemas.ExpenseResponse)
+def update_expense(expense_id: int, expense_update :schemas.ExpenseUpdate,db: Session = Depends(get_db)):
+    db_expense = db.query(models.Expense).filter(models.Expense.id == expense_id).first()
+    if db_expense is None:
+        raise HTTPException(status_code = 404, detail = "Expense not found")
+    updata_data = expense_update.model_dump(exclude_unset=True)
+    for key,value in updata_data.items():
+        setattr(db_expense,key,value)
+    db.commit()
+    db.refresh(db_expense)
+    return db_expense
