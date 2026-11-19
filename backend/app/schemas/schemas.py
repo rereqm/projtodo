@@ -26,7 +26,7 @@ class TripUpdate(TripBase):
 class ExpenseBase(BaseModel):
     title : str
     amount : Decimal
-    is_approved : bool
+    is_approved : bool = False
 
 class ExpenseCreate(ExpenseBase):
     trip_id : int
