@@ -1,11 +1,14 @@
 import { TextInput, NumberInput, Button, Stack, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useState } from 'react';
+import { Alert } from '@mantine/core';
 import type { Trip } from '../../entities/trip/model/types';
 
-export const AddTripForm = ({ onAdd, onClose }: { onAdd: (trip: Trip) => void, onClose: () => void }) =>
-{
-  const form = useForm
-  ({
+type TripDraft = Omit<Trip, 'id' | 'color'>;
+
+export const AddTripForm = ({ onAdd, onClose }: { onAdd: (trip: TripDraft) => Promise<void>, onClose: () => void }) => {
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const form = useForm({
     initialValues: {
       title: '',
       description: '',
@@ -17,24 +20,25 @@ export const AddTripForm = ({ onAdd, onClose }: { onAdd: (trip: Trip) => void, o
     },
   });
 
-  const handleSubmit = (values: typeof form.values) =>
-  {
-    const newTrip: Trip = {
-      id: Date.now().toString(),
+  const handleSubmit = async (values: typeof form.values) => {
+    setSubmitError(null);
+    try {
+      await onAdd({
       title: values.title,
       description: values.description,
       budget: values.budget,
-      color: 'blue',
-    };
-
-    onAdd(newTrip);
-    form.reset();
-    onClose();
+      });
+      form.reset();
+      onClose();
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Не удалось сохранить командировку.');
+    }
   };
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
+        {submitError && <Alert color="red" variant="light">{submitError}</Alert>}
         <TextInput
           label="Куда едем?"
           placeholder="Например, Москва"
@@ -53,7 +57,7 @@ export const AddTripForm = ({ onAdd, onClose }: { onAdd: (trip: Trip) => void, o
           min={0}
           {...form.getInputProps('budget')}
         />
-        <Button type="submit" color="blue" mt="md">
+        <Button type="submit" className="primary-button form-submit" mt="md">
           Сохранить командировку
         </Button>
       </Stack>

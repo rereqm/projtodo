@@ -1,15 +1,19 @@
-import { AppShell, Group, Title, NavLink, Burger, Drawer, Stack, Box } from "@mantine/core";
+import { AppShell, Group, Title, NavLink, Burger, Drawer, Stack, Box, Container, Text, ThemeIcon } from "@mantine/core";
 import { Outlet, Link, useLocation } from "react-router";
 import { useDisclosure } from '@mantine/hooks';
+import { IconPlane, IconReceipt, IconBriefcase2, IconUsers } from '@tabler/icons-react';
+import { AccountPanel } from './AccountPanel';
+import { useAuth } from '../../app/providers/auth-context';
 
 export const Layout = () => {
     const location = useLocation();
+    const { user } = useAuth();
     const [opened, { toggle, close }] = useDisclosure(false);
 
     const linkStyle = {
         width: 'auto',
-        borderRadius: '4px',
-        padding: '8px 16px',
+        borderRadius: '10px',
+        padding: '9px 14px',
     };
 
     const navLinks = (
@@ -18,14 +22,25 @@ export const Layout = () => {
                 component={Link}
                 to="/"
                 label="Расходы"
+                leftSection={<IconReceipt size={17} stroke={1.8} />}
                 active={location.pathname === '/'}
                 onClick={close}
                 style={linkStyle}
             />
+            {user?.role === 2 && <NavLink
+                component={Link}
+                to="/users"
+                label="Сотрудники"
+                leftSection={<IconUsers size={17} stroke={1.8} />}
+                active={location.pathname === '/users'}
+                onClick={close}
+                style={linkStyle}
+            />}
             <NavLink
                 component={Link}
                 to="/trips"
                 label="Командировки"
+                leftSection={<IconPlane size={17} stroke={1.8} />}
                 active={location.pathname === '/trips'}
                 onClick={close}
                 style={linkStyle}
@@ -34,17 +49,30 @@ export const Layout = () => {
     );
 
     return (
-        <AppShell header={{ height: 60 }} padding="md">
-            <AppShell.Header bg="white" withBorder>
-                <Group h="100%" px="md" justify="space-between">
-                    <Title order={3}>comApp</Title>
+        <AppShell className="app-shell" header={{ height: 76 }}>
+            <AppShell.Header className="app-header" withBorder>
+                <Container size="lg" h="100%" px={{ base: 'md', sm: 'xl' }}>
+                <Group h="100%" justify="space-between">
+                    <Group gap="sm" wrap="nowrap">
+                        <ThemeIcon className="brand-mark" size={40} radius="12px" variant="filled">
+                            <IconBriefcase2 size={20} stroke={1.8} />
+                        </ThemeIcon>
+                        <Box>
+                            <Title order={4} className="brand-title">Командировки</Title>
+                            <Text className="brand-caption" size="xs">Расходы и поездки</Text>
+                        </Box>
+                    </Group>
 
-                    <Group visibleFrom="sm" gap="xs">
+                    <Group visibleFrom="sm" gap={6} className="main-nav">
                         {navLinks}
                     </Group>
 
-                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+                    <Group gap="xs" wrap="nowrap">
+                        <AccountPanel />
+                        <Burger className="mobile-menu" opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" aria-label="Открыть меню" />
+                    </Group>
                 </Group>
+                </Container>
             </AppShell.Header>
 
             <Drawer opened={opened} onClose={close} title="Меню" padding="md">
@@ -53,10 +81,10 @@ export const Layout = () => {
                 </Stack>
             </Drawer>
 
-            <AppShell.Main>
-                <Box pt="md">
-                    <Outlet />
-                </Box>
+            <AppShell.Main className="app-main">
+                <Container size="lg" px={{ base: 'md', sm: 'xl' }} py={{ base: 'xl', sm: 40 }}>
+                    <Box><Outlet /></Box>
+                </Container>
             </AppShell.Main>
         </AppShell>
     );
