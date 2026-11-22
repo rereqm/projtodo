@@ -19,3 +19,6 @@ PyJWT==2.15.1
 
 # Testing
 requests==2.34.2
+
+
+psycopg==3.3.9
