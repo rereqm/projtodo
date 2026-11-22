@@ -1,7 +1,8 @@
 # Python
 __pycache__/
-*.pyc
+*.py[cod]
 .venv/
+.venv*/
 venv/
 
 # Node
@@ -16,7 +17,8 @@ dist/
 
 # Env / secrets
 .env
-.env.local
+.env.*
+!.env.example
 
 # OS
 .DS_Store

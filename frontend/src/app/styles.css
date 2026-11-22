@@ -1,0 +1,401 @@
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #17243a;
+  background: #f5f7fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  --mantine-color-body: #f5f7fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: #f5f7fb;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.app-shell {
+  background: #f5f7fb;
+}
+
+.app-header {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: #e9edf4;
+  box-shadow: 0 2px 12px rgba(31, 48, 77, 0.025);
+}
+
+.brand-mark {
+  color: white;
+  background: #243c67;
+}
+
+.brand-title {
+  color: #1b2b45;
+  letter-spacing: -0.025em;
+}
+
+.brand-caption {
+  color: #8591a3;
+  line-height: 1.2;
+}
+
+.main-nav .mantine-NavLink-root {
+  color: #6e7b8f;
+  font-size: 14px;
+  font-weight: 550;
+  transition: color 140ms ease, background 140ms ease;
+}
+
+.main-nav .mantine-NavLink-root:hover {
+  color: #273d60;
+  background: #f4f6fa;
+}
+
+.main-nav .mantine-NavLink-root[data-active="true"] {
+  color: #284d86;
+  background: #edf3fb;
+}
+
+.mobile-menu {
+  color: #30435f;
+}
+
+.login-button,
+.profile-trigger {
+  height: 40px;
+  border-color: #e2e8f0;
+  border-radius: 10px;
+  color: #334864;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.profile-trigger {
+  padding-inline: 8px 12px;
+}
+
+.profile-trigger:hover,
+.login-button:hover {
+  background: #f7f9fc;
+}
+
+.profile-avatar {
+  color: #2c568d;
+  background: #e9f0fa;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.profile-avatar-large {
+  font-size: 20px;
+}
+
+.mobile-account-button {
+  color: #31547f;
+  background: #eef3fa;
+}
+
+.demo-alert {
+  border-color: #dfe9f6;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.employee-row {
+  border-color: #e8edf4;
+  background: #fff;
+}
+
+.employee-identity {
+  min-width: 0;
+}
+
+.form-submit {
+  width: 100%;
+}
+
+.app-main {
+  min-height: calc(100vh - 76px);
+}
+
+.page-heading {
+  min-height: 82px;
+}
+
+.eyebrow {
+  margin-bottom: 5px;
+  color: #7185a4;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+}
+
+.page-title {
+  color: #1b2b45;
+  font-size: clamp(26px, 3vw, 32px);
+  font-weight: 680;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+
+.page-description {
+  margin-top: 7px;
+  color: #7b8798;
+  font-size: 14px;
+}
+
+.primary-button {
+  height: 42px;
+  padding-inline: 16px;
+  border: 0;
+  border-radius: 10px;
+  background: #294c7e;
+  box-shadow: 0 4px 10px rgba(41, 76, 126, 0.12);
+  font-size: 13px;
+  font-weight: 650;
+  transition: transform 140ms ease, background 140ms ease, box-shadow 140ms ease;
+}
+
+.primary-button:hover {
+  transform: translateY(-1px);
+  background: #213f6b;
+  box-shadow: 0 6px 14px rgba(41, 76, 126, 0.16);
+}
+
+.summary-card {
+  border-color: #e8edf4;
+  background: #fff;
+  box-shadow: 0 3px 12px rgba(31, 48, 77, 0.025);
+}
+
+.summary-icon-blue {
+  color: #3d689f;
+  background: #edf3fb;
+}
+
+.summary-icon-orange {
+  color: #b87b2a;
+  background: #fcf4e8;
+}
+
+.summary-icon-teal {
+  color: #2e8279;
+  background: #eaf6f3;
+}
+
+.summary-label {
+  color: #7d899a;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.summary-value {
+  margin-top: 2px;
+  color: #21334e;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.empty-state {
+  border-color: #e8edf4;
+  background: #fff;
+  color: #263a59;
+}
+
+.expense-row {
+  border-color: #e8edf4;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(31, 48, 77, 0.025);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.expense-row:hover {
+  transform: translateY(-1px);
+  border-color: #dbe4ef;
+  box-shadow: 0 8px 20px rgba(31, 48, 77, 0.055);
+}
+
+.expense-mark {
+  width: 10px;
+  height: 36px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  background: #e8b45f;
+}
+
+.expense-mark-approved {
+  background: #5da89d;
+}
+
+.expense-mark-rejected {
+  background: #d77c7c;
+}
+
+.expense-title {
+  color: #273953;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.expense-meta {
+  color: #8a95a5;
+}
+
+.expense-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.expense-amount-group {
+  min-width: 122px;
+  text-align: right;
+}
+
+.expense-amount {
+  color: #263b5c;
+  font-size: 16px;
+  font-weight: 720;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.expense-status {
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.review-actions {
+  border-top: 1px solid #f0f2f6;
+  padding-top: 12px;
+}
+
+.delete-button {
+  flex: 0 0 auto;
+  color: #97a1b0;
+}
+
+.delete-button:hover {
+  color: #b44e52;
+  background: #fbefef;
+}
+
+.trip-card {
+  border-color: #e7ecf3;
+  background: #fff;
+  box-shadow: 0 3px 12px rgba(31, 48, 77, 0.03);
+}
+
+.trip-label {
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.025em;
+}
+
+.trip-title {
+  min-height: 48px;
+  color: #243650;
+  font-size: 17px;
+  font-weight: 680;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+}
+
+.trip-description {
+  min-height: 40px;
+  line-height: 1.5;
+}
+
+.trip-budget {
+  padding: 13px 14px 11px;
+  border: 1px solid #edf0f5;
+  border-radius: 12px;
+  background: #fafbfd;
+}
+
+.trip-budget-total {
+  color: #263c5d;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.trip-details-button {
+  align-self: flex-start;
+  padding-inline: 4px;
+  font-weight: 650;
+}
+
+.trip-detail-stat {
+  border-color: #e8edf4;
+  background: #fafbfd;
+}
+
+.trip-expense-row {
+  border-color: #e8edf4;
+  background: #fff;
+}
+
+.trip-expense-copy {
+  min-width: 0;
+}
+
+.mantine-Modal-content {
+  border: 1px solid #e8edf4;
+  box-shadow: 0 24px 80px rgba(24, 40, 66, 0.16);
+}
+
+.mantine-Modal-title {
+  color: #21334e;
+  font-size: 18px;
+  font-weight: 680;
+}
+
+@media (max-width: 575px) {
+  .page-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .page-heading .primary-button {
+    width: 100%;
+  }
+
+  .expense-row {
+    padding: 14px;
+  }
+
+  .expense-row > .mantine-Group-root {
+    align-items: flex-start;
+  }
+
+  .expense-amount-group {
+    min-width: auto;
+  }
+
+  .expense-amount {
+    font-size: 14px;
+  }
+
+  .expense-status {
+    white-space: normal;
+  }
+}
