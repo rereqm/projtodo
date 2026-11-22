@@ -1,75 +1,462 @@
-# React + TypeScript + Vite
+# Портал командировок и расходов
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Fullstack-приложение для управления служебными командировками и связанными с ними расходами сотрудников.
 
-Currently, two official plugins are available:
+Проект разработан в рамках лабораторных работ по курсу Fullstack. Приложение объединяет frontend на React и TypeScript, backend на FastAPI и базу данных PostgreSQL.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 1. Возможности приложения
 
-## React Compiler
+### Авторизация и пользователи
+- Регистрация сотрудников.
+- Вход в систему по email и паролю.
+- Хранение паролей в виде криптографических хешей.
+- Авторизация с использованием JWT.
+- Выдача Access Token и Refresh Token.
+- Обновление токенов с ротацией Refresh Token.
+- Выход из системы и отзыв Refresh Token.
+- Получение информации о текущем пользователе.
+- Активация и деактивация сотрудников администратором.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Командировки
+- Создание командировок.
+- Просмотр списка командировок.
+- Просмотр отдельной командировки.
+- Редактирование командировок.
+- Удаление командировок.
+- Проверка принадлежности командировки пользователю.
 
-## Expanding the ESLint configuration
+### Расходы
+- Создание расходов в рамках командировки.
+- Просмотр расходов командировки.
+- Редактирование расходов.
+- Согласование расходов администратором.
+- Отклонение расходов с обязательным комментарием.
+- Фиксация пользователя, выполнившего проверку.
+- Запрет изменения уже рассмотренных расходов.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 2. Технологический стек
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Backend
+| Технология | Назначение |
+|---|---|
+| Python | Основной язык backend |
+| FastAPI | Разработка REST API |
+| PostgreSQL | Реляционная база данных |
+| SQLAlchemy | ORM и взаимодействие с БД |
+| Pydantic | Валидация запросов и ответов |
+| Pydantic Settings | Конфигурация приложения |
+| PyJWT | Создание и проверка JWT |
+| pwdlib | Хеширование и проверка паролей |
+| Argon2 | Алгоритм хеширования паролей |
+| Alembic | Инструмент миграций БД |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Frontend
+| Технология | Назначение |
+|---|---|
+| React | Пользовательский интерфейс |
+| TypeScript | Типизация frontend |
+| Vite | Сборка и запуск frontend |
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 3. Роли пользователей
 
+В приложении предусмотрено две роли:
+
+| Роль | Значение | Возможности |
+|---|---:|---|
+| Employee | 1 | Работа со своими командировками и расходами |
+| Admin | 2 | Просмотр и управление командировками, согласование расходов, управление сотрудниками |
+
+Новые пользователи регистрируются с ролью `Employee` и неактивным статусом.
+
+Активация и изменение состояния сотрудников доступны только администратору.
+
+Назначение роли администратора выполняется непосредственно через базу данных, а не через публичную регистрацию.
+
+## 4. Структура проекта
+
+```text
+project/
+│
+├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── routers/
+│   │   │   │   ├── auth.py
+│   │   │   │   ├── trips.py
+│   │   │   │   ├── expenses.py
+│   │   │   │   └── users.py
+│   │   │   ├── dependencies.py
+│   │   │   ├── helpers.py
+│   │   │   ├── auth_helpers.py
+│   │   │   └── routes.py
+│   │   │
+│   │   ├── core/
+│   │   │   ├── config.py
+│   │   │   └── security.py
+│   │   │
+│   │   ├── db/
+│   │   │   └── database.py
+│   │   │
+│   │   ├── models/
+│   │   │   └── models.py
+│   │   │
+│   │   ├── schemas/
+│   │   │   ├── base.py
+│   │   │   ├── user.py
+│   │   │   ├── token.py
+│   │   │   ├── trip.py
+│   │   │   └── expense.py
+│   │   │
+│   │   └── main.py
+│   │
+│   ├── migrations/
+│   ├── requirements.txt
+│   ├── script_test.py
+│   └── .env.example
+│
+├── frontend/
+│   └── src/
+│
+├── docs/
+│   └── screenshots/
+│
+├── .gitignore
+└── README.md
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## 5. Настройка окружения
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Для запуска проекта необходимы:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Python.
+- Node.js и npm.
+- PostgreSQL.
+- Git.
 
+### Настройка Backend
+
+Перейдите в каталог backend:
+
+```bash
+cd backend
 ```
+
+Создайте виртуальное окружение:
+
+```bash
+python -m venv .venv
+```
+
+Активируйте его.
+
+Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+Windows:
+
+```powershell
+.venv\Scripts\activate
+```
+
+Установите зависимости:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### Настройка PostgreSQL
+
+Создайте базу данных PostgreSQL:
+
+```sql
+CREATE DATABASE db;
+```
+
+Пользователь и пароль PostgreSQL должны соответствовать настройкам `.env`.
+
+### Настройка переменных окружения
+
+Создайте файл `.env` в каталоге `backend` на основе `.env.example`.
+
+Пример конфигурации:
+
+```env
+POSTGRES_USER=test_user
+POSTGRES_PASSWORD=your_password
+POSTGRES_SERVER=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=db
+
+SECRET_KEY=your_secret_key
+
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=15
+REFRESH_TOKEN_EXPIRE_DAYS=7
+```
+
+Сгенерировать секретный ключ можно командой:
+
+```bash
+python -c "import secrets; print(secrets.token_urlsafe(64))"
+```
+
+Файл `.env` содержит конфиденциальные данные и не должен попадать в Git.
+
+## 6. Запуск Backend
+
+Из каталога `backend` выполните:
+
+```bash
+uvicorn app.main:app --reload
+```
+
+Backend будет доступен по адресу:
+
+```text
+http://127.0.0.1:8000
+```
+
+Интерактивная документация API:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+OpenAPI:
+
+```text
+http://127.0.0.1:8000/openapi.json
+```
+
+При первом запуске SQLAlchemy создаёт отсутствующие таблицы на основе объявленных моделей.
+
+## 7. Запуск Frontend
+
+Перейдите в каталог frontend:
+
+```bash
+cd frontend
+```
+
+Установите зависимости:
+
+```bash
+npm install
+```
+
+Запустите приложение:
+
+```bash
+npm run dev
+```
+
+При стандартной конфигурации Vite frontend будет доступен по адресу:
+
+```text
+http://localhost:5173
+```
+
+## 8. API
+
+### Авторизация
+
+| Метод | Endpoint | Назначение |
+|---|---|---|
+| POST | `/auth/register/` | Регистрация |
+| POST | `/auth/login/` | Вход |
+| POST | `/auth/refresh/` | Обновление токенов |
+| POST | `/auth/logout/` | Выход |
+| GET | `/auth/me/` | Получение текущего пользователя |
+
+### Командировки
+
+| Метод | Endpoint | Назначение |
+|---|---|---|
+| POST | `/trips/` | Создание командировки |
+| GET | `/trips/` | Получение списка |
+| GET | `/trips/{trip_id}` | Получение командировки |
+| PATCH | `/trips/{trip_id}` | Изменение |
+| DELETE | `/trips/{trip_id}` | Удаление |
+
+### Расходы
+
+| Метод | Endpoint | Назначение |
+|---|---|---|
+| POST | `/expenses/` | Создание расхода |
+| GET | `/trips/{trip_id}/expenses` | Получение расходов командировки |
+| PATCH | `/expenses/{expense_id}` | Изменение расхода |
+| PATCH | `/expenses/{expense_id}/review` | Согласование или отклонение |
+
+### Пользователи
+
+| Метод | Endpoint | Назначение |
+|---|---|---|
+| PATCH | `/users/{user_id}/activation/` | Активация или деактивация сотрудника |
+
+Защищённые маршруты требуют передачи Access Token в HTTP-заголовке:
+
+```http
+Authorization: Bearer <access_token>
+```
+
+## 9. Модель данных
+
+Основные сущности приложения:
+
+### User
+Хранит информацию о пользователях:
+- Идентификатор.
+- Email.
+- ФИО.
+- Хеш пароля.
+- Дата регистрации.
+- Статус активности.
+- Роль.
+
+### Trip
+Хранит информацию о командировках:
+- Идентификатор.
+- Название.
+- Описание.
+- Бюджет.
+- Идентификатор владельца.
+
+### Expense
+Хранит информацию о расходах:
+- Идентификатор.
+- Название.
+- Сумма.
+- Статус.
+- Дата создания.
+- Идентификатор командировки.
+- Идентификатор проверяющего.
+- Дата проверки.
+- Комментарий проверяющего.
+
+Статусы расходов:
+
+| Значение | Статус |
+|---:|---|
+| 0 | Pending |
+| 1 | Approved |
+| 2 | Rejected |
+
+### RefreshToken
+Хранит сведения об активных и отозванных Refresh Token:
+- Идентификатор.
+- Идентификатор пользователя.
+- Хеш токена.
+- Дата окончания действия.
+- Дата отзыва.
+- Дата создания.
+
+В базе данных сохраняется хеш Refresh Token, а не его исходное значение.
+
+## 10. Безопасность
+
+В приложении реализованы следующие механизмы:
+
+- Хеширование паролей перед сохранением в PostgreSQL.
+- Проверка пароля при авторизации.
+- JWT-аутентификация.
+- Разделение Access Token и Refresh Token.
+- Ограниченный срок действия токенов.
+- Ротация Refresh Token.
+- Отзыв Refresh Token при выходе.
+- Проверка активности учётной записи.
+- Разграничение доступа по ролям.
+- Проверка принадлежности командировок пользователям.
+- Ограничение доступа к согласованию расходов.
+- Валидация данных с использованием Pydantic.
+- Ограничения целостности на уровне PostgreSQL.
+
+## 11. Интеграционное тестирование
+
+Для проверки Backend предусмотрен скрипт:
+
+```text
+backend/script_test.py
+```
+
+Перед запуском необходимо запустить FastAPI.
+
+Из каталога `backend` выполните:
+
+```bash
+python script_test.py
+```
+
+Тестирование включает:
+
+- Проверку доступности API.
+- Проверку регистрации и авторизации.
+- Проверку работы Access и Refresh Token.
+- Проверку ротации и отзыва токенов.
+- Проверку активации и деактивации пользователей.
+- Проверку разграничения прав доступа.
+- Проверку CRUD-операций командировок и расходов.
+- Проверку валидации данных.
+- Проверку ограничений на согласование расходов.
+
+По умолчанию используются тестовые учётные данные:
+
+```text
+Email: test@example.com
+Password: testpassword123
+```
+
+Можно переопределить параметры запуска через переменные окружения:
+
+```bash
+ADMIN_EMAIL=admin@example.com \
+ADMIN_PASSWORD=your_password \
+API_BASE_URL=http://127.0.0.1:8000 \
+python script_test.py
+```
+
+Для сохранения созданных тестовых записей:
+
+```bash
+python script_test.py --keep-data
+```
+
+По умолчанию скрипт удаляет созданные им тестовые записи после выполнения проверок.
+
+## 12. Скриншоты приложения
+
+Скриншоты основных экранов приложения находятся в каталоге:
+
+```text
+docs/screenshots/
+```
+
+В каталоге представлены основные пользовательские сценарии и экраны приложения:
+
+- Авторизация.
+- Регистрация.
+- Список командировок.
+- Просмотр командировки.
+- Управление расходами.
+- Согласование расходов.
+- Управление сотрудниками.
+
+## 13. История разработки
+
+Проект разрабатывался последовательно в рамках лабораторных работ:
+
+- Лабораторная №1 — интерфейс приложения и каркас frontend.
+- Лабораторная №2 — Backend, API и база данных.
+- Лабораторная №3 — архитектура frontend и динамический интерфейс.
+- Лабораторная №4 — аутентификация и авторизация.
+- Лабораторная №5 — интеграция frontend и backend.
+
+Изменения проекта фиксируются в Git с использованием отдельных коммитов.
+
+---
+
+**Портал командировок и расходов**
+
+Fullstack-приложение на React, TypeScript, FastAPI и PostgreSQL.
